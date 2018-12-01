@@ -41,7 +41,6 @@ download(){
     )
     echo "download etcd binary"
     [ ! -f "etcd" ] && (
-        mkdir etcd
         curl -s -L https://storage.googleapis.com/etcd/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
         tar xf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/
         mv  /tmp/etcd-${ETCD_VER}-linux-amd64/etcd* .
@@ -77,18 +76,18 @@ download(){
     echo "download cni plugins"
     [ ! -f "flannel" ] && (
         curl -s -L https://github.com/containernetworking/plugins/releases/download/${CNI_VER}/cni-plugins-amd64-${CNI_VER}.tgz -o /tmp/cni-plugins-amd64-${CNI_VER}.tgz
-        tar xf /tmp/cni-plugins-amd64-${CNI_VER}.tgz -C $PWD/cni/bin/
+        tar xf /tmp/cni-plugins-amd64-${CNI_VER}.tgz -C $PWD
     )
     [ ! -f "calico" ] && (
         curl -s -L https://github.com/projectcalico/cni-plugin/releases/download/${CALICO}/calico-amd64 -o ./calico
         curl -s -L https://github.com/projectcalico/cni-plugin/releases/download/${CALICO}/calico-ipam-amd64 -o ./calico-ipam
         chmod +x ./calico ./calico-ipam
     )
-
     popd
 }
 
 prepare(){
+
     cp -a bin $releasedir
     cp -a cni $releasedir
 
@@ -105,9 +104,11 @@ EOF
 
 case $1 in
     prepare)
+        download
         prepare
     ;;
     *)
+        download
         prepare
         docker push rainbond/${program}_${vers}
         echo "run <docker run --rm -v /srv/salt/misc/file:/sysdir rainbond/${program}_${vers} tar zxf /pkg.tgz -C /sysdir> for install"
