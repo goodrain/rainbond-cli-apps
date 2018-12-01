@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+git:
+  depth: 1
+
+script:
+- ./release.sh prepare
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker push rainbond/cni:k8s_5.0
