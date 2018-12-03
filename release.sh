@@ -16,6 +16,7 @@ download(){
     DOCKER_VER=17.06.2-ce
     CNI_VER=v0.7.4
     CALICO=v3.3.1
+    flannel=v0.10.0
     DOCKER_COMPOSE=1.23.1
     HARBOR=v1.5.2
     CFSSL_VERSION=R1.2
@@ -82,6 +83,10 @@ download(){
         curl -s -L https://github.com/projectcalico/cni-plugin/releases/download/${CALICO}/calico-amd64 -o ./calico
         curl -s -L https://github.com/projectcalico/cni-plugin/releases/download/${CALICO}/calico-ipam-amd64 -o ./calico-ipam
         chmod +x ./calico ./calico-ipam
+    )
+    [ ! -f "lanneld" ] && (
+        curl -s -L https://github.com/coreos/flannel/releases/download/v0.10.0/flanneld-amd64 -o ./flanneld
+        chmod +x ./flanneld
     )
     popd
 }
