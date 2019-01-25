@@ -24,6 +24,7 @@ download(){
     CTOP=0.7.1
     DRY=v0.9-beta.7
     REG=v0.16.0
+    kube-prompt=v1.0.5
     DOWNLOAD_URL=https://pkg.cfssl.org
     CFSSL_PKG=(cfssl cfssljson cfssl-certinfo)
     pushd ./bin
@@ -71,6 +72,11 @@ download(){
     [ ! -f "reg" ] && (
         curl -s -L https://github.com/genuinetools/reg/releases/download/${REG}/reg-linux-amd64 -o ./reg
         chmod +x ./reg
+    )
+    echo "download kube-prompt"
+    [ ! -f "kube-prompt" ] && (
+        curl -s -L https://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/util/kube-prompt -o ./kube-prompt
+        chmod +x ./kube-prompt
     )
     popd
     pushd ./cni/bin
