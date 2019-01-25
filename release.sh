@@ -24,7 +24,7 @@ download(){
     CTOP=0.7.1
     DRY=v0.9-beta.7
     REG=v0.16.0
-    kube-prompt=v1.0.5
+    #kube-prompt=v1.0.5
     DOWNLOAD_URL=https://pkg.cfssl.org
     CFSSL_PKG=(cfssl cfssljson cfssl-certinfo)
     pushd ./bin
@@ -97,7 +97,7 @@ download(){
     popd
 }
 
-prepare(){
+build(){
 
     cp -a bin $releasedir
     cp -a cni $releasedir
@@ -116,11 +116,11 @@ EOF
 case $1 in
     prepare)
         download
-        prepare
+        build
     ;;
     *)
         download
-        prepare
+        build
         docker push rainbond/${program}_${vers}
         echo "run <docker run --rm -v /srv/salt/misc/file:/sysdir rainbond/${program}_${vers} tar zxf /pkg.tgz -C /sysdir> for install"
     ;;
