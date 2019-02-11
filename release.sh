@@ -17,14 +17,16 @@ download(){
     CNI_VER=v0.7.4
     CALICO=v3.3.1
     flannel=v0.10.0
-    DOCKER_COMPOSE=1.23.1
+    DOCKER_COMPOSE=1.23.2
     HARBOR=v1.5.2
     CFSSL_VERSION=R1.2
     ARCH=linux-amd64
-    CTOP=0.7.1
-    DRY=v0.9-beta.7
-    REG=v0.16.0
+    CTOP=0.7.2
+    DRY=v0.9-beta.8
+    REG_VER=v0.16.0
+    IMG_VER=v0.5.6
     #kube-prompt=v1.0.5
+    HELM_VER=v2.12.3
     DOWNLOAD_URL=https://pkg.cfssl.org
     CFSSL_PKG=(cfssl cfssljson cfssl-certinfo)
     pushd ./bin
@@ -40,6 +42,16 @@ download(){
     [ ! -f "hyperkube" ] && (
         curl -s -L https://storage.googleapis.com/kubernetes-release/release/${K8S_VER}/bin/linux/amd64/hyperkube -o ./hyperkube
         chmod +x ./hyperkube
+    )
+    echo "download helm"
+    [ ! -f "helm" ] && (
+        rm -rf /tmp/helm && mkdir -p /tmp/helm
+        curl -s -L https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VER}-linux-amd64.tar.gz -o /tmp/helm-${HELM_VER}-linux-amd64.tar.gz
+        tar xzf /tmp/helm-${HELM_VER}-linux-amd64.tar.gz -C /tmp/helm  --strip-components=1
+        cp -a /tmp/helm/helm .
+        cp -a /tmp/helm/tiller .
+        chmod +x ./helm
+        chmod +x ./tiller
     )
     echo "download etcd binary"
     [ ! -f "etcd" ] && (
@@ -70,8 +82,10 @@ download(){
     )
     echo "download reg"
     [ ! -f "reg" ] && (
-        curl -s -L https://github.com/genuinetools/reg/releases/download/${REG}/reg-linux-amd64 -o ./reg
+        curl -s -L https://github.com/genuinetools/reg/releases/download/${REG_VER}/reg-linux-amd64 -o ./reg
+        curl -s -L https://github.com/genuinetools/img/releases/download/${IMG_VER}/img-linux-amd64 -o ./img
         chmod +x ./reg
+        chmod +x ./img
     )
     echo "download kube-prompt"
     [ ! -f "kube-prompt" ] && (
