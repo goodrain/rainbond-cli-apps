@@ -9,4 +9,4 @@ git:
 script:
 - ./release.sh prepare
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker push rainbond/cni:k8s_5.0
+- docker push rainbond/cni:k8s_5.1.0

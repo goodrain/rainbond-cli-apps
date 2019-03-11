@@ -7,11 +7,11 @@ rm -fr $releasedir
 mkdir -p $releasedir
 
 program=cni:k8s
-vers=5.0
+vers=5.1.0
 
 download(){
 
-    K8S_VER=v1.10.11
+    K8S_VER=v1.10.13
     ETCD_VER=v3.2.25
     DOCKER_VER=17.06.2-ce
     CNI_VER=v0.7.4
@@ -25,7 +25,6 @@ download(){
     DRY=v0.9-beta.8
     REG_VER=v0.16.0
     IMG_VER=v0.5.6
-    #kube-prompt=v1.0.5
     HELM_VER=v2.12.3
     DOWNLOAD_URL=https://pkg.cfssl.org
     CFSSL_PKG=(cfssl cfssljson cfssl-certinfo)
